@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>transom — locked note</title>
+<style>
+  body { background:#000; color:#f0ecff; font-family:ui-monospace,Menlo,Consolas,monospace;
+         display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; }
+  .lock { max-width:420px; padding:32px; text-align:center; }
+  .lock h1 { font-size:18px; color:#5BCEFA; }
+  .lock p { color:#a594cc; font-size:14px; line-height:1.5; }
+  .lock input { width:100%; box-sizing:border-box; padding:10px; border-radius:6px;
+                border:1px solid #3d2878; background:#0f0d1f; color:#f0ecff; font-size:16px; }
+  .lock button { margin-top:10px; padding:10px 18px; border-radius:6px; border:1px solid #5BCEFA;
+                 background:#0f0d1f; color:#5BCEFA; font-size:14px; cursor:pointer; }
+  .lock .err { color:#ef4444; min-height:1.2em; }
+</style>
+</head>
+<body>
+<script type="application/json" id="transom-blob">{"ct":"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","iter":600000,"iv":"T+z4GhL5WcOSrpOT","mode":"word","salt":"h/tg6ePRWIO9uwm94M9kdg==","v":1}</script>
+<div class="lock" id="lock">
+  <h1>🔒 locked note</h1>
+  <p id="lock-msg">unlocking…</p>
+  <div id="word-ui" style="display:none">
+    <p>"Ah ah ah — what's the magic word?"</p>
+    <input id="word" type="password" autocomplete="off" autofocus>
+    <button id="unlock">Unlock</button>
+    <p class="err" id="err"></p>
+  </div>
+</div>
+<script>
+(function () {
+  "use strict";
+  var blob = JSON.parse(document.getElementById("transom-blob").textContent);
+  // WebCrypto (crypto.subtle) is only present in a SECURE CONTEXT — HTTPS, or
+  // http://localhost. Over plain HTTP to a LAN/Tailscale IP it's undefined, so
+  // decryption can't even start. Say that plainly instead of "key is invalid".
+  if (!window.isSecureContext || !(window.crypto && window.crypto.subtle)) {
+    document.getElementById("lock-msg").textContent =
+      "This page must be opened over HTTPS (or localhost) — decryption needs a " +
+      "secure context. The published GitHub Pages link is HTTPS and works; a " +
+      "plain http:// LAN address does not.";
+    return;
+  }
+  var enc = function (s) { return Uint8Array.from(atob(s), function (c) { return c.charCodeAt(0); }); };
+  var b64urlToBytes = function (s) {
+    s = s.replace(/-/g, "+").replace(/_/g, "/");
+    while (s.length % 4) s += "=";
+    return enc(s);
+  };
+  function show(msg) { document.getElementById("lock-msg").textContent = msg; }
+  function reveal(plaintext) {
+    // Replace the ENTIRE document with the decrypted note. document.write()
+    // after the page has loaded leaves the lock shell behind (the note renders
+    // *below* it); swapping <html> wholesale is clean. importNode does not run
+    // scripts, which is fine — the note is static HTML.
+    var doc = new DOMParser().parseFromString(plaintext, "text/html");
+    document.replaceChild(
+      document.importNode(doc.documentElement, true),
+      document.documentElement
+    );
+  }
+  async function decryptWith(keyBytes) {
+    var key = await crypto.subtle.importKey("raw", keyBytes, "AES-GCM", false, ["decrypt"]);
+    var pt = await crypto.subtle.decrypt(
+      { name: "AES-GCM", iv: enc(blob.iv) }, key, enc(blob.ct));
+    return new TextDecoder().decode(pt);
+  }
+  async function wordKey(word) {
+    var base = await crypto.subtle.importKey(
+      "raw", new TextEncoder().encode(word), "PBKDF2", false, ["deriveBits"]);
+    var bits = await crypto.subtle.deriveBits(
+      { name: "PBKDF2", salt: enc(blob.salt), iterations: blob.iter, hash: "SHA-256" },
+      base, 256);
+    return new Uint8Array(bits);
+  }
+  if (blob.mode === "link") {
+    var m = (location.hash || "").match(/[#&]k=([A-Za-z0-9_-]+)/);
+    if (!m) {
+      show("this link is missing its key — the note can't be unlocked without the full link.");
+      return;
+    }
+    var keyBytes;
+    try { keyBytes = b64urlToBytes(m[1]); } catch (e) { show("this link's key is invalid."); return; }
+    // Scrub the key from the address bar BEFORE revealing, so screenshots,
+    // re-copies, and later-injected scripts can't re-propagate it.
+    try { history.replaceState(null, "", location.pathname + location.search); } catch (e) {}
+    decryptWith(keyBytes).then(reveal, function () { show("this link's key is invalid."); });
+  } else {
+    show("");
+    document.getElementById("word-ui").style.display = "block";
+    var go = function () {
+      var w = document.getElementById("word").value;
+      if (!w) return;
+      wordKey(w).then(decryptWith).then(reveal, function () {
+        document.getElementById("err").textContent = "Nope. The vault stays shut. 🙅";
+      });
+    };
+    document.getElementById("unlock").addEventListener("click", go);
+    document.getElementById("word").addEventListener("keydown", function (e) {
+      if (e.key === "Enter") go();
+    });
+  }
+})();
+</script>
+</body>
+</html>
